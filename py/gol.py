@@ -8,23 +8,7 @@ import random
 
 # create_board
 def create_board(rows, cols):
-  return [['-']*cols]*rows
-
-
-# create_start
-def create_start(board, life_chance):
-  rows = len(board)
-  cols = len(board[0])
-
-  for row in range(0,rows):
-    for col in range(0,cols):
-      num = random.random()
-      if(life_chance > random.random()):
-        board[row][col] = 'X'
-        print(str(num) + ", " + str(row) + ", " + str(col))
-      else:
-        board[row][col] = '-'
-        print(str(num) + ", " + str(row) + ", " + str(col))
+  return [['-']*cols for _ in range(rows)]
 
 
 # print_board
@@ -42,27 +26,17 @@ def print_board(board):
 def count_neighbors(board, row, col):
   rows = len(board)
   cols = len(board[0])
-
-  print(str(row) + " " + str(col))
   neighbor_count = 0
 
-  row_start = max(row-1,0)
-  row_end = min(row+1,rows)
-  col_start = max(col-1,0)
-  col_end = min(col+1,cols)
-  print(str(row_start)+' '+str(row_end)+' '+str(col_start)+' '+str(col_end))
-
-  for i in range(row_start, row_end):
-    for j in range(col_start, col_end):
+  for i in range(0, rows):
+    for j in range(0, cols):
       if( \
         not(i == row and j == col) \
-        and (i < rows) \
-        and (j > cols) 
-      ):
-        print(str(i) + ', ' + str(j) + ', ' + board[i][j])
-        if(board[i][j] == "X"):
-          neighbor_count = neighbor_count + 1
-
+        and (i <= row+1 and i >= row-1) \
+        and (j <= col+1 and j >= col-1) ):
+          if(board[i][j] == "X"):
+            neighbor_count = neighbor_count + 1
+  
   return neighbor_count
 
 
@@ -85,8 +59,6 @@ def get_next_gen_cell(board, row, col):
     else:
       newCell = "-"
 
-  print(str(row) + " " + str(col) + " " + str(neighbors))
-  
   return newCell
 
 
@@ -100,7 +72,8 @@ def generate_next_board(board):
 
   for row in range(0,rows):
     for col in range(0,rows):
-      nextBoard[row][col] = get_next_gen_cell(board,row,col)
+      cell = get_next_gen_cell(board,row,col)
+      nextBoard[row][col] = cell
 
   return nextBoard
 
@@ -108,10 +81,13 @@ def generate_next_board(board):
 board = \
   [ \
     ['-','-','X','-','X'], \
-    ['-','X','X','-','X'], \
+    ['-','X','X','-','-'], \
     ['-','-','X','X','X'], \
-    ['-','-','X','-','X'], \
-    ['X','-','X','-','X'], \
+    ['-','-','-','-','X'], \
+    ['X','-','-','-','X'], \
   ]
 print_board(board)
-print_board(generate_next_board(board))
+for i in range(10):
+  print()
+  board = generate_next_board(board)
+  print_board(board)
