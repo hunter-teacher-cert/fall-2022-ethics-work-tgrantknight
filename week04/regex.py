@@ -2,11 +2,20 @@ import re
 
 
 def find_date(line):
-  # Mr., Ms., Mrs., Dr.
-  pattern = r"\d{1,2}/\d{1,2}/\d{2,4}"
+  # First and Last
+  pattern = r"(\w+) (\w+)[^\.]"
   result = re.findall(pattern,line)
 
-  pattern=r'(October|Oct|November|Nov)( [0-9]{1,2}, [0-9]{4})'
+  # First Middle Last
+  pattern=r'(\w+) (\w+) (\w+)'
+  result = result + re.findall(pattern,line)
+
+  # First M. Last
+  pattern=r'(\w+) (\w+\.) (\w+)'
+  result = result + re.findall(pattern,line)
+  
+  # Mr., Ms., Mrs., Dr.
+  pattern=r'(Mr\.|Ms\.|Mrs\.|Dr\.) (\w+)'
   result = result + re.findall(pattern,line)
   return result
 
