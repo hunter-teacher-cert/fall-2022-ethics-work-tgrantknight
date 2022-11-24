@@ -1,4 +1,4 @@
-run = ["cd py", "python binsearch.py"]
+run = ["cd final_project", "ethics.py"]
 
 [nix]
 channel = "stable-21_11"
