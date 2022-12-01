@@ -54,35 +54,35 @@ def new_post():
   # center: 0.0, 0.7, 94.8, 4.5 -> Use 0.0, 0.7, 95.5, 100
   # left: 4.7, 14.4, 56.3, 24.6 -> Use 4.7, 19.1, 75.4, 100
   # right: 12.3, 25.4, 47.9, 14.4 -> Use 12.3, 37.7, 85.6, 100
-  if _category == -1:
-    # Left
-    if truth_seed < 0.0: # for completeness, this will never activate
+  if _category == 0:
+    # Center
+    if truth_seed < 0.000: # for completeness, this will never activate
       _truth = -1
-    elif truth_seed < 0.7:
+    elif truth_seed < 0.007:
       _truth = 0
-    elif truth_seed < 95.5:
+    elif truth_seed < 0.955:
       _truth = 1
     else:
       _truth = 0
   
-  elif _category == 0:
-    # Center
-    if truth_seed < 4.7:
+  elif _category == -1:
+    # Left
+    if truth_seed < 0.047:
       _truth = -1
-    elif truth_seed < 19.1:
+    elif truth_seed < 0.191:
       _truth = 0
-    elif truth_seed < 75.4:
+    elif truth_seed < 0.754:
       _truth = 1
     else:
       _truth = 0
 
   else:
-    # Center
-    if truth_seed < 12.3:
+    # Right
+    if truth_seed < 0.123:
       _truth = -1
-    elif truth_seed < 37.7:
+    elif truth_seed < 0.377:
       _truth = 0
-    elif truth_seed < 85.6:
+    elif truth_seed < 0.856:
       _truth = 1
     else:
       _truth = 0
@@ -140,12 +140,13 @@ def print_stats(post_list):
       truth_stats[2] += 1  
 
   print( \
-    "Left: " + str(category_stats[0]) \
-    + "\nCenter: " + str(category_stats[1]) \
-    + "\nRight: " + str(category_stats[2]) \
-    + "\nFalse: " + str(truth_stats[0]) \
-    + "\nMixed: " + str(truth_stats[1]) \
-    + "\nTrue: " + str(truth_stats[2]) \
+    "Left: " + str(category_stats[0]) +" (" + str(round(category_stats[0]/len(post_list)*100,1)) + "%)"\
+    + "\nCenter: " + str(category_stats[1]) +" (" + str(round(category_stats[1]/len(post_list)*100,1)) + "%)"\
+    + "\nRight: " + str(category_stats[2]) +" (" + str(round(category_stats[2]/len(post_list)*100,1)) + "%)"\
+    + "\n"\
+    + "\nFalse: " + str(truth_stats[0]) +" (" + str(round(truth_stats[0]/len(post_list)*100,1)) + "%)"\
+    + "\nMixed: " + str(truth_stats[1]) +" (" + str(round(truth_stats[1]/len(post_list)*100,1)) + "%)"\
+    + "\nTrue: " + str(truth_stats[2]) +" (" + str(round(truth_stats[2]/len(post_list)*100,1)) + "%)"\
   )
 
 # main
